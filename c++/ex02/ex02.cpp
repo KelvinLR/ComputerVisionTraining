@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    cv::Mat image, imB, imC, grey;
+    cv::Mat image, grey;
 
     image = cv::imread(argv[1], IMREAD_COLOR);
 
@@ -18,14 +18,10 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    //imB = image.clone(); 
-    //imC = image;          
-
     std::cout << "Imagem carregada com sucesso!\n";
-    cv::cvtColor(image, grey, COLOR_BGR2GRAY);
+    // cvtColor (semelhante ao memcpy no C)
+    cv::cvtColor(image, grey, COLOR_BGR2GRAY); //image representa a Mat de origem, grey a de destino, e o parâmetro final é como a imagem será copiada
     std::cout << "Dimensões: " << image.cols << " x " << image.rows << std::endl;
-
-    // imwrite("saida.jpg", imB);  
 
     namedWindow("Display Image", WINDOW_AUTOSIZE);
     imshow("Display Image", grey);
@@ -33,7 +29,6 @@ int main(int argc, char** argv) {
     int k = waitKey(0);
 
     if(k == 's') {
-        // grey_image = cv::cvtColor(img, grey, COLOR_BGR2GRAY);
         cv::imwrite("greyaus02.png", grey);
     }
 
