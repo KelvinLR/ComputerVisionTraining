@@ -12,7 +12,6 @@ int main(int argc, char** argv) {
     cv::Mat image, imB, imC, grey;
 
     image = cv::imread(argv[1], IMREAD_COLOR);
-    grey_image = cv::cvtColor(img, grey, COLOR_BGR2GRAY);
 
     if (!image.data) {
         std::cout << "Não foi possível abrir ou encontrar a imagem\n";
@@ -23,18 +22,19 @@ int main(int argc, char** argv) {
     //imC = image;          
 
     std::cout << "Imagem carregada com sucesso!\n";
+    cv::cvtColor(image, grey, COLOR_BGR2GRAY);
     std::cout << "Dimensões: " << image.cols << " x " << image.rows << std::endl;
 
-    imwrite("saida.jpg", imB);  
+    // imwrite("saida.jpg", imB);  
 
     namedWindow("Display Image", WINDOW_AUTOSIZE);
-    imshow("Display Image", grey_image);
+    imshow("Display Image", grey);
 
     int k = waitKey(0);
 
     if(k == 's') {
-        grey_image = cv::cvtColor(img, grey, COLOR_BGR2GRAY);
-        cv::imwrite("greyaus02.png", grey_image);
+        // grey_image = cv::cvtColor(img, grey, COLOR_BGR2GRAY);
+        cv::imwrite("greyaus02.png", grey);
     }
 
     return 0;
