@@ -4,9 +4,16 @@
 using namespace cv;
 
 Mat getColoredChannel(const Mat& image, int channelIndex) {
+    // criando array de canais
+    // e extraindo o canal desejado
+    // e preenchendo os outros canais com zeros
     std::vector<Mat> zeros(3, Mat::zeros(image.size(), CV_8UC1));
     Mat extracted;
 
+    // extraindo canal e copiando para o vetor de canais
+    // e preenchendo os outros canais com zeros
+    // o canal desejado é o canalIndex
+    // e os outros canais são preenchidos com zeros
     extractChannel(image, extracted, channelIndex);
     zeros[channelIndex] = extracted;
     Mat result;
