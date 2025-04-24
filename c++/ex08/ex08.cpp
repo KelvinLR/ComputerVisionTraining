@@ -29,16 +29,28 @@ int main(int argc, char** argv) {
 
     int k;
 
+    double upscale = 2.0;
+    double downscale = 0.5;
+    cv::resize(gray, small, cv::Size(), downscale, downscale);
+    cv::resize(gray, big, cv::Size(), upscale, upscale);
+
     do {
         k = waitKey(0);
         switch (k) {
             case '1':
                 cv::imshow("Display Image", small);
+                std::cout << "Dimensões: " << small.cols << " x " << small.rows << std::endl;
                 cv::imwrite("small_beach.png", small);
                 break;
             case '2':   
                 cv::imshow("Display Image", big);
+                std::cout << "Dimensões: " << big.cols << " x " << big.rows << std::endl;
                 cv::imwrite("big_beach.png", big);
+                break;
+            case '3':   
+                cv::imshow("Display Image", gray);
+                std::cout << "Dimensões: " << gray.cols << " x " << gray.rows << std::endl;
+                cv::imwrite("grey_beach.png", gray);
                 break;
             default:
                 std::cout << "Opção inválida! Tente novamente.\n";
