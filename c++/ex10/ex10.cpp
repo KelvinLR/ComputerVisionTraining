@@ -25,11 +25,29 @@ int main(int argc, char** argv) {
     std::cout << "Imagem carregada com sucesso!\n";
 
     cv::Vec<unsigned char, 3> matrix[image.rows][image.cols];
+    
+    std::vector<cv::Mat> images;
 
-    for(int i = 0; i < image.rows; i++) {
-        for(int j = 0; j < image.cols; j++) {
-            matrix[i][j] = image.at<cv::Vec3b>(i, j);
+    for(int limiar = 0; limiar < 128; limiar++) {
+        cv::Mat imagemLimiarizada(image.rows, image.cols, CV_8UC1);
+        for(int i = 0; i < image.rows; i++) {
+            for(int j = 0; j < image.cols; j++) {
+                matrix[i][j] = image.at<cv::Vec3b>(i, j);
+                cv::Vec3b pixel = matrix[i][j];
+                int R = pixel[2];
+                int G = pixel[1];
+                int B = pixel[0];
+        
+                int media = (R + G + B) / 3;
+        
+                if (media > limiar) {
+                    imagemLimiarizada.at<uchar>(i, j) = 255;
+                } else {
+                    imagemLimiarizada.at<uchar>(i, j) = 0;
+                }
+            }
         }
+        images.push_back(imagemLimiarizada);
     }
     
     cv::cvtColor(image, gray, COLOR_BGR2GRAY); 
@@ -37,17 +55,24 @@ int main(int argc, char** argv) {
 
     for(int i = 0; i < image.rows; i++) {
         for(int j = 0; j < image.cols; j++) {
-            myFile << "pixel [" << i << "][" << j << "] = " << (int)matrix[i][j][0] << " " << (int)matrix[i][j][1] << " " << (int)matrix[i][j][2] << "\n";
+            myFile << "pixel [" << i << "][" << j << "] = " << (int)matrix[i][j][0] << " " << (int)matrix[i][j][1] << " " << (int)matrix[i][j][2];
             std::cout << matrix[i][j] << " ";
         }
     }
+   
     myFile.close();
     
-    cv::namedWindow("Display Image", WINDOW_AUTOSIZE);
-    cv::imshow("Display Image", gray);
+    cv::namedWindow("Limiarizacao", cv::WINDOW_AUTOSIZE);
+    while (true) {
+        for (int i = 0; i < images.size(); i++) {
+            cv::imshow("Limiarizacao", images[i]);
+            if (cv::waitKey(50) == 27) 
+                return 0;
+        }
+    }
+    cv::destroyAllWindows();
 
     int k;
-
     k = waitKey(0);
 
     return 0;
