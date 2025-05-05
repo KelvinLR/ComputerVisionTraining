@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
             myFile << R << " " << G << " " << B << " ";
             // std::cout << matrix[i][j] << " ";
         }
-        myFile << "\n"
+        myFile << "\n";
     }
    
     myFile.close();
