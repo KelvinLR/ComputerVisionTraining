@@ -8,6 +8,6 @@ target_link_libraries(MyProject ${OpenCV_LIBS})
 
 add_custom_command(TARGET MyProject POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy
-            ${CMAKE_SOURCE_DIR}/beach.jpg
+            ${CMAKE_SOURCE_DIR}/matrix.txt
             ${CMAKE_CURRENT_BINARY_DIR}
 )
