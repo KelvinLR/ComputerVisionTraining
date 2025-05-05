@@ -55,9 +55,17 @@ int main(int argc, char** argv) {
 
     for(int i = 0; i < image.rows; i++) {
         for(int j = 0; j < image.cols; j++) {
-            myFile << (int)matrix[i][j][0] << (int)matrix[i][j][1] << (int)matrix[i][j][2];
-            std::cout << matrix[i][j] << " ";
+            matrix[i][j] = image.at<cv::Vec3b>(i, j);
+            cv::Vec3b pixel = matrix[i][j];
+
+            int R = pixel[2];
+            int G = pixel[1];
+            int B = pixel[0];
+
+            myFile << R << " " << G << " " << B << " ";
+            // std::cout << matrix[i][j] << " ";
         }
+        myFile << "\n"
     }
    
     myFile.close();
