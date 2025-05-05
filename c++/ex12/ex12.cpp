@@ -3,42 +3,37 @@
 #include <fstream>
 #define MAX_KERNEL_SIZE 30
 
-using namespace cv;
+using namespace std;
 
-int main(int argc, char** argv) {
-    if (argc != 2) {
-        std::cout << "usage: DisplayImage.out <Image_Path>\n";
+int main() {
+
+    ifstream file("matrix.txt");
+    string line;
+
+    if (!file.is_open()) {
+        std::cout << "Erro ao abrir o arquivo.\n";
         return -1;
     }
 
-    cv::Mat image, gray, thr;
-
-    image = cv::imread(argv[1], IMREAD_COLOR);
-
-    if (!image.data) {
-        std::cout << "Não foi possível abrir ou encontrar a imagem\n";
-        return -1;
+    while (std::getline(file, line)) {
+        cout << line << std::endl;
     }
 
-    std::cout << "Imagem carregada com sucesso!\n";
-    
-    cv::cvtColor(image, gray, COLOR_BGR2GRAY); 
-    cv::threshold(gray, thr, 100,255,THRESH_BINARY);
+    file.close();
 
-    std::cout << "Dimensões: " << image.cols << " x " << image.rows << std::endl;
-
-    Moments m = moments(thr,true);
-    Point p(m.m10/m.m00, m.m01/m.m00);
-
-    circle(image, p, 5, Scalar(128,0,0), -1);
+    cv::Mat image;
     namedWindow("Display Image", WINDOW_AUTOSIZE);
     imshow("Display Image", image);
 
     int k = waitKey(0);
 
     if(k == 's') {
-        cv::imwrite("greyaus02.png", thr);
+        cv::imwrite("beachImage.png", image);
     }
+
+    
+
+   
 
     return 0;
 }
