@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
 
     for(int i = 0; i < image.rows; i++) {
         for(int j = 0; j < image.cols; j++) {
-            myFile << "pixel [" << i << "][" << j << "] = " << (int)matrix[i][j][0] << " " << (int)matrix[i][j][1] << " " << (int)matrix[i][j][2];
+            myFile << (int)matrix[i][j][0] << (int)matrix[i][j][1] << (int)matrix[i][j][2];
             std::cout << matrix[i][j] << " ";
         }
     }
