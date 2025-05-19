@@ -8,14 +8,14 @@ using namespace cv;
 
 int main() {
     VideoCapture cap(0);
-    Mat frame, gray;
+    Mat frame, gray, canny;
 
     if (!cap.isOpened()) {
         std::cerr << "Erro: não foi possível acessar a câmera.\n";
         return -1;
     }
     
-    double downscale = 0.2;
+    double downscale = 0.6;
     
     while(cap.read(frame)) {
         resize(frame, frame, cv::Size(), downscale, downscale);
@@ -23,14 +23,16 @@ int main() {
 
         int key = cv::waitKey(1000 / FPS);
 
-        if (key == 'g') {
-            cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
-            cv::imshow("Cinza", gray);
-            cv::imwrite("grayFrame.png", gray);
-            std::cout << "Imagem em tons de cinza salva como grayFrame.png\n";
-        } else if (key == 'q') {
-            break;
-        }
+        cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+        cv::imshow("Cinza", gray);
+        cv::Canny(gray, canny ,10,350);
+        cv::imshow("Canny", canny);
+        
+        if (key == 's') {
+            cv::imwrite("CannyFrame.png", canny);
+            cv::imwrite("grayFrame.png", gray);    
+        } else if (key == 'e') break;
+        
     }
 
     return 0;
