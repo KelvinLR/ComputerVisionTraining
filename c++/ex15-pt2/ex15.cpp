@@ -16,8 +16,7 @@ int main() {
         return -1;
     }
     
-    double downscale = 0.2;
-    
+    double downscale = 0.8;
     
     while(cap.read(frame)) {
         resize(frame, frame, cv::Size(), downscale, downscale);
